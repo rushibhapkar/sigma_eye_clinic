@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Page & Surface ── */
+    --background: 210 60% 98%;          /* #F5F9FE — soft blue-white page BG */
+    --foreground: 214 80% 12%;          /* #0D3B6E — dark navy text */
+
+    --card: 0 0% 100%;                  /* #FFFFFF — card surface */
+    --card-foreground: 214 80% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 214 80% 12%;
+
+    /* ── Brand Blues ── */
+    --primary: 210 74% 40%;             /* #1A6EB5 — primary blue */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 60% 93%;           /* #D6EAFB — light blue bg */
+    --secondary-foreground: 214 80% 22%;
+
+    --muted: 210 40% 96%;               /* #EFF6FD — very light blue */
+    --muted-foreground: 210 30% 48%;    /* #5A7FA8 — muted slate */
+
+    /* ── Accent Green ── */
+    --accent: 151 56% 52%;              /* #3EC88A — green accent */
+    --accent-foreground: 0 0% 100%;
+
+    /* ── Utility ── */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 40% 88%;              /* #C8DEFA — blue-tinted border */
+    --input: 210 40% 88%;
+    --ring: 210 74% 40%;                /* matches --primary */
+
+    --radius: 0.875rem;                 /* 14px — matches card radius in design */
+
+    /* ── Chart Colors ── */
+    --chart-1: 210 74% 40%;            /* primary blue */
+    --chart-2: 151 56% 52%;            /* accent green */
+    --chart-3: 210 60% 55%;
+    --chart-4: 214 50% 65%;
+    --chart-5: 151 45% 38%;
+
+    /* ── Blue Scale (primary brand) ── */
+    --blue-50:  210 80% 97%;           /* #EBF4FF */
+    --blue-100: 210 75% 93%;           /* #D6EAFB */
+    --blue-200: 210 70% 85%;           /* #B8D8F5 */
+    --blue-300: 210 68% 72%;           /* #87BDE9 */
+    --blue-400: 210 70% 57%;           /* #4E96D6 */
+    --blue-500: 210 74% 40%;           /* #1A6EB5 — primary */
+    --blue-600: 214 78% 32%;           /* #115690 */
+    --blue-700: 214 80% 24%;           /* #0C4070 */
+    --blue-800: 214 80% 17%;           /* #082D4F */
+    --blue-900: 214 80% 12%;           /* #0D3B6E — navy */
+
+    /* ── Green Scale (accent) ── */
+    --green-50:  151 70% 97%;          /* #EEFBF5 */
+    --green-100: 151 65% 92%;          /* #D1F5E4 */
+    --green-200: 151 60% 82%;          /* #A4EAC9 */
+    --green-300: 151 58% 68%;          /* #6CD9A8 */
+    --green-400: 151 57% 57%;          /* #47CC91 */
+    --green-500: 151 56% 52%;          /* #3EC88A — accent */
+    --green-600: 151 58% 40%;          /* #2D9E6C */
+    --green-700: 151 60% 30%;          /* #1F7550 */
+    --green-800: 151 62% 20%;          /* #124D34 */
+    --green-900: 151 65% 13%;          /* #0B3121 */
+
+    /* ── Neutral Slate (text & borders) ── */
+    --slate-50:  210 30% 98%;
+    --slate-100: 210 25% 95%;
+    --slate-200: 210 25% 90%;          /* #C8DEFA toned */
+    --slate-300: 210 22% 80%;
+    --slate-400: 210 20% 65%;
+    --slate-500: 210 20% 50%;          /* #5A7FA8 — muted text */
+    --slate-600: 210 22% 38%;
+    --slate-700: 214 25% 28%;
+    --slate-800: 214 35% 18%;
+    --slate-900: 214 80% 12%;          /* #0D3B6E */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* ── Hero gradient background (matches Nuvica soft blue BG) ── */
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, #D6EAFB 0%, #EBF4FF 50%, #F5F9FE 100%);
+  }
+
+  /* ── Card with blue-tinted soft shadow ── */
+  .shadow-blue-soft {
+    box-shadow: 0 4px 20px rgba(26, 110, 181, 0.12);
+  }
+
+  .shadow-blue-md {
+    box-shadow: 0 8px 32px rgba(26, 110, 181, 0.18);
+  }
+
+  /* ── Service card gradient (light blue card BG) ── */
+  .bg-service-card {
+    background: linear-gradient(135deg, #EBF4FF 0%, #F0F8FF 100%);
+  }
+
+  /* ── Featured / dark card (3rd card treatment) ── */
+  .bg-card-dark {
+    background: linear-gradient(135deg, #0D3B6E 0%, #1A6EB5 100%);
+  }
+
+  /* ── Stats bar divider ── */
+  .divide-blue {
+    border-color: #C8DEFA;
+  }
+
+  /* ── Pill badge variants ── */
+  .badge-blue {
+    @apply inline-block px-3 py-1 rounded-full text-xs font-medium;
+    background: #E3F2FD;
+    color: #1565C0;
+  }
+
+  .badge-green {
+    @apply inline-block px-3 py-1 rounded-full text-xs font-medium;
+    background: #E8F5E9;
+    color: #2E7D32;
+  }
+}
+
+/* ── Animations (unchanged, universally useful) ── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.7; }
+}
+
+/* ── New: subtle shimmer for stat badges / floating cards ── */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.animate-fade-in-up    { animation: fade-in-up    0.6s ease-out forwards; }
+.animate-fade-in       { animation: fade-in        0.5s ease-out forwards; }
+.animate-scale-in      { animation: scale-in       0.5s ease-out forwards; }
+.animate-slide-in-right{ animation: slide-in-right 0.6s ease-out forwards; }
+.animate-float         { animation: float          3s   ease-in-out infinite; }
+.animate-pulse-soft    { animation: pulse-soft     2s   ease-in-out infinite; }
+.animate-shimmer       { animation: shimmer        1.6s linear      infinite; }
+
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+.animation-delay-600 { animation-delay: 600ms; }
+.animation-delay-700 { animation-delay: 700ms; }
+.animation-delay-800 { animation-delay: 800ms; }
