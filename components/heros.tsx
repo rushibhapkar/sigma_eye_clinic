@@ -196,7 +196,7 @@ export function HeroSection() {
               style={{ boxShadow: "0 32px 80px rgba(13,59,110,0.22)" }}
             >
               <Image
-                src="https://images.pexels.com/photos/668293/pexels-photo-668293.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="https://images.pexels.com/photos/5752311/pexels-photo-5752311.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="Modern eye clinic facility"
                 fill
                 className="object-cover"

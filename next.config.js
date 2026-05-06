@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // CRITICAL: This tells Next.js to create the /out folder
+  output: 'export',
+  // GitHub repo name is case-sensitive
+  basePath: '/sigma_eye_clinic', 
+  // Ensures assets are linked correctly within the repo subfolder
+  assetPrefix: '/sigma_eye_clinic/', 
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
-  },
-  images: { 
-    unoptimized: true 
   },
 };
 
