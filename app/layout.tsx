@@ -11,11 +11,12 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Arogyam Eye & Maternity Clinic | Trusted Healthcare Since 2004",
+  // Updated to match the Sigma Eye and Mother Care Clinic branding
+  title: "Sigma Eye and Mother Care Clinic | Trusted Healthcare Excellence",
   description:
-    "Expert eye care and compassionate maternity services. Cataract surgery, LASIK, prenatal care, delivery, and more. Book your appointment today.",
+    "Expert eye care and compassionate mother care services. Specializing in cataract surgery, LASIK, prenatal care, and delivery. Book your appointment at Sigma Clinic today.",
   openGraph: {
-    title: "Arogyam Eye & Maternity Clinic",
+    title: "Sigma Eye and Mother Care Clinic",
     description:
       "Where Vision Meets New Beginnings. Expert eye care and compassionate maternity services under one roof.",
     type: "website",
@@ -33,7 +34,7 @@ export default function RootLayout({
         className={`${inter.variable} ${jakarta.variable} font-sans antialiased`}
       >
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

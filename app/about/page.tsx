@@ -60,7 +60,7 @@ const doctorMeta: Record<
   },
 };
 
-export function AboutPage() {
+export default function AboutPage() {
   return (
     <section className="relative py-20 lg:py-28 overflow-hidden bg-background">
 
@@ -306,4 +306,3 @@ export function AboutPage() {
   );
 }
 
-export default AboutPage;
