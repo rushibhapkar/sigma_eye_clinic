@@ -13,7 +13,7 @@ import {
   testimonials,
 } from "@/lib/data";
 import { HeroSection } from "@/components/heros"; 
-import { AboutPage } from "@/app/about/page";
+import AboutPage from "@/app/about/page";
 import { ServicesOverview } from "@/components/servicesOverview";
 import { WhyChooseUs } from "@/components/whyChooseUs";
 
