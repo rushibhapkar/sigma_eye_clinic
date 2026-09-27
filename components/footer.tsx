@@ -1,31 +1,37 @@
 import Link from "next/link";
+import Image from "next/image";
+
 import { Eye, Baby, Phone, Mail, MapPin, Clock, ArrowRight } from "lucide-react";
 import { clinicInfo, navLinks } from "@/lib/data";
 
+const LOGO_SRC = "/sigma_eye_clinic/assets/logo.png";
 export function Footer() {
   return (
     <footer className="bg-foreground text-white/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent">
-                <Eye className="w-5 h-5 text-white absolute -left-0.5 top-1/2 -translate-y-1/2" />
-                <Baby className="w-4 h-4 text-white absolute right-0.5 top-1/2 -translate-y-1/2" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold text-white leading-tight">
-                  Sigma
-                </span>
-                <span className="text-[10px] font-medium text-white/50 leading-none tracking-wider uppercase">
-Eye & Mother Care                </span>
-              </div>
-            </Link>
-            <p className="text-sm text-white/60 leading-relaxed">
-              {clinicInfo.tagline}. Providing trusted eye care and compassionate
-              maternity services for over two decades.
-            </p>
-          </div>
+<div className="space-y-4">
+      <Link href="/" className="flex items-center gap-3 group">
+        {/* Logo Container */}
+        <div className="relative w-10 h-10 shrink-0 overflow-hidden rounded-xl bg-white/5 p-1 transition-transform duration-300 group-hover:scale-105">
+          <img
+            src={LOGO_SRC}
+            alt="Sigma Eye & Mother Care Logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+
+        {/* Brand Text */}
+<span className="text-base sm:text-lg font-bold text-white tracking-tight whitespace-nowrap group-hover:text-primary-foreground/90 transition-colors">
+  Sigma Eye & Mother Care
+</span>
+      </Link>
+
+      <p className="text-sm text-white/60 leading-relaxed">
+        {clinicInfo.tagline}. Providing trusted eye care and compassionate
+        maternity services for over two decades.
+      </p>
+    </div>
 
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-white uppercase tracking-wider">

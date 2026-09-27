@@ -4,15 +4,25 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, Phone, Eye, Baby, ChevronDown, Sparkles } from "lucide-react";
-import { navLinks, clinicInfo } from "@/lib/data";
+import { navLinks } from "@/lib/data";
 import { cn } from "@/lib/utils";
-
+import Image from "next/image";
+// Array of 3 clinic phone numbers with descriptive labels
+const PHONE_NUMBERS = [
+  { label: "Appointment", number: "9975893339", display: "+91 99758 93339" },
+  { label: "Reception", number: "9579744727", display: "+91 95797 44727" },
+  { label: "Helpline", number: "9881956427", display: "+91 98819 56427" },
+];
+const LOGO_SRC = "/sigma_eye_clinic/assets/logo.png";
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const [phoneMenuOpen, setPhoneMenuOpen] = useState(false);
+
   const navRef = useRef<HTMLDivElement>(null);
+  const phoneRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -23,12 +33,26 @@ export function Navbar() {
 
   useEffect(() => {
     setIsOpen(false);
+    setPhoneMenuOpen(false);
   }, [pathname]);
+
+  // Close phone dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (phoneRef.current && !phoneRef.current.contains(event.target as Node)) {
+        setPhoneMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   // Magnetic hover indicator for desktop nav
@@ -71,30 +95,26 @@ export function Navbar() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-[72px]">
-
             {/* ── Logo ── */}
-            <Link href="/" className="flex items-center gap-3 group shrink-0">
-              {/* Icon cluster */}
-              <div className="relative w-11 h-11 shrink-0">
-                {/* Outer ring */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#1A6EB5] to-[#0D3B6E] shadow-[0_4px_14px_rgba(26,110,181,0.35)] group-hover:shadow-[0_6px_20px_rgba(26,110,181,0.5)] transition-all duration-300 group-hover:scale-105" />
-                {/* Shine overlay */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent" />
-                {/* Icons */}
-                <Eye className="absolute left-[7px] top-1/2 -translate-y-1/2 w-4 h-4 text-white" />
-                <Baby className="absolute right-[6px] top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#3EC88A]" />
-              </div>
+<Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+      {/* Logo Container */}
+      <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0 overflow-hidden rounded-xl">
+        <Image
+          src={LOGO_SRC}
+          alt="Sigma Eye & Mother Care Logo"
+          fill
+          sizes="(max-width: 640px) 40px, 44px"
+          className="object-contain group-hover:scale-105 transition-transform duration-300"
+          priority
+        />
+      </div>
 
-              {/* Text */}
-              <div className="flex flex-col leading-none">
-                <span className="text-[17px] font-bold tracking-tight text-[#0D3B6E] group-hover:text-[#1A6EB5] transition-colors duration-200">
-                  Sigma
-                </span>
-                <span className="text-[9.5px] font-semibold tracking-[0.18em] uppercase text-[#5A7FA8] mt-0.5">
-                  Eye & Mother Care
-                </span>
-              </div>
-            </Link>
+      <div className="flex items-center leading-none whitespace-nowrap overflow-hidden">
+        <span className="text-[15px] sm:text-[17px] font-bold tracking-tight text-[#0D3B6E] group-hover:text-[#1A6EB5] transition-colors duration-200">
+          Sigma Eye & Mother Care
+        </span>
+      </div>
+    </Link>
 
             {/* ── Desktop Nav ── */}
             <nav
@@ -127,7 +147,6 @@ export function Navbar() {
                     )}
                   >
                     {link.label}
-                    {/* Active dot */}
                     {isActive && (
                       <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#1A6EB5]" />
                     )}
@@ -136,30 +155,77 @@ export function Navbar() {
               })}
             </nav>
 
-            {/* ── Desktop CTA ── */}
+            {/* ── Desktop CTA & Interactive Phone Dropdown ── */}
             <div className="hidden lg:flex items-center gap-4">
-              {/* Phone */}
-              <a
-                href={`tel:${clinicInfo.phone}`}
-                className="group flex items-center gap-2 text-sm font-medium text-[#5A7FA8] hover:text-[#1A6EB5] transition-colors duration-200"
-              >
-                <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#EBF4FF] group-hover:bg-[#D6EAFB] transition-colors duration-200">
-                  <Phone className="w-3.5 h-3.5 text-[#1A6EB5]" />
-                </span>
-                <span className="hidden xl:block">{clinicInfo.phone}</span>
-              </a>
+              {/* Phone Dropdown Container */}
+              <div className="relative" ref={phoneRef}>
+                <button
+                  onClick={() => setPhoneMenuOpen(!phoneMenuOpen)}
+                  onMouseEnter={() => setPhoneMenuOpen(true)}
+                  className="group flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-[#C8DEFA]/60 bg-white/60 hover:bg-[#EBF4FF] hover:border-[#1A6EB5]/30 transition-all duration-200 text-sm font-medium text-[#0D3B6E]"
+                  aria-expanded={phoneMenuOpen}
+                >
+                  <span className="flex items-center justify-center w-7 h-7 rounded-lg bg-[#1A6EB5] text-white shadow-sm group-hover:scale-105 transition-transform">
+                    <Phone className="w-3.5 h-3.5" />
+                  </span>
+                  <div className="flex flex-col text-left">
+                    <span className="text-[10px] uppercase tracking-wider font-semibold text-[#5A7FA8] -mb-0.5">
+                      Contact Us
+                    </span>
+                    <span className="text-xs font-bold text-[#0D3B6E]">
+                      +91 99758 93339
+                    </span>
+                  </div>
+                  <ChevronDown
+                    className={cn(
+                      "w-4 h-4 text-[#5A7FA8] transition-transform duration-200 ml-0.5",
+                      phoneMenuOpen && "rotate-180 text-[#1A6EB5]"
+                    )}
+                  />
+                </button>
+
+                {/* Popover Card */}
+                {phoneMenuOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl shadow-[0_12px_32px_rgba(26,110,181,0.15)] border border-[#C8DEFA]/80 p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="px-2 py-1.5 mb-1 border-b border-[#EBF4FF]">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-[#5A7FA8]">
+                        Quick Helpline & Support
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      {PHONE_NUMBERS.map((item, idx) => (
+                        <a
+                          key={idx}
+                          href={`tel:${item.number}`}
+                          className="flex items-center justify-between p-2 rounded-xl hover:bg-[#EBF4FF] transition-colors group/item"
+                        >
+                          <div>
+                            <p className="text-[11px] font-medium text-[#5A7FA8]">
+                              {item.label}
+                            </p>
+                            <p className="text-sm font-bold text-[#0D3B6E] group-hover/item:text-[#1A6EB5] transition-colors">
+                              {item.display}
+                            </p>
+                          </div>
+                          <span className="flex items-center justify-center w-6 h-6 rounded-full bg-[#1A6EB5]/10 text-[#1A6EB5] group-hover/item:bg-[#1A6EB5] group-hover/item:text-white transition-colors">
+                            <Phone className="w-3 h-3" />
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Divider */}
-              <div className="w-px h-5 bg-[#C8DEFA]" />
+              <div className="w-px h-6 bg-[#C8DEFA]" />
 
-              {/* Book button */}
+              {/* Book Appointment Button */}
               <Link
                 href="/contact"
                 className="group relative inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,110,181,0.4)] active:scale-[0.97]"
               >
-                {/* Button BG */}
                 <span className="absolute inset-0 bg-gradient-to-r from-[#1A6EB5] to-[#0D3B6E]" />
-                {/* Hover shimmer */}
                 <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
                 <Sparkles className="relative w-3.5 h-3.5 text-[#3EC88A]" />
                 <span className="relative">Book Appointment</span>
@@ -194,7 +260,6 @@ export function Navbar() {
       </header>
 
       {/* ── Mobile Menu Overlay ── */}
-      {/* Backdrop — starts below the navbar (top-16 = 64px) */}
       <div
         className={cn(
           "fixed inset-x-0 bottom-0 top-16 z-40 bg-[#0D3B6E]/20 backdrop-blur-sm lg:hidden transition-opacity duration-300",
@@ -203,12 +268,12 @@ export function Navbar() {
         onClick={() => setIsOpen(false)}
       />
 
-      {/* Drawer — slides in from right, starts below the navbar */}
+      {/* Drawer — slides in from right */}
       <div
         className={cn(
           "fixed right-0 bottom-0 top-16 z-40 w-[min(320px,85vw)] lg:hidden",
           "bg-white border-l border-[#C8DEFA]/60 shadow-[-8px_0_40px_rgba(26,110,181,0.12)]",
-          "flex flex-col transition-transform duration-[400ms] ease-[cubic-bezier(0.32,0.72,0,1)]",
+          "flex flex-col transition-transform duration-300 ease-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >
@@ -239,21 +304,39 @@ export function Navbar() {
           </div>
         </nav>
 
-        {/* Drawer footer */}
+        {/* Drawer footer with all 3 phone numbers */}
         <div className="px-4 py-5 border-t border-[#EBF4FF] space-y-3 bg-[#F5F9FE]">
-          <a
-            href={`tel:${clinicInfo.phone}`}
-            className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white border border-[#C8DEFA] text-sm font-medium text-[#1A6EB5] hover:bg-[#EBF4FF] transition-colors duration-200"
-          >
-            <span className="w-7 h-7 flex items-center justify-center rounded-full bg-[#EBF4FF]">
-              <Phone className="w-3.5 h-3.5 text-[#1A6EB5]" />
-            </span>
-            {clinicInfo.phone}
-          </a>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#5A7FA8] px-1">
+            Direct Helpline Lines
+          </p>
+          <div className="space-y-2">
+            {PHONE_NUMBERS.map((item, idx) => (
+              <a
+                key={idx}
+                href={`tel:${item.number}`}
+                className="flex items-center justify-between px-3 py-2.5 rounded-xl bg-white border border-[#C8DEFA] text-sm font-medium text-[#1A6EB5] hover:bg-[#EBF4FF] transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <span className="w-6 h-6 flex items-center justify-center rounded-full bg-[#EBF4FF]">
+                    <Phone className="w-3 h-3 text-[#1A6EB5]" />
+                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-[#5A7FA8] leading-tight">
+                      {item.label}
+                    </span>
+                    <span className="text-xs font-bold text-[#0D3B6E]">
+                      {item.display}
+                    </span>
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+
           <Link
             href="/contact"
             onClick={() => setIsOpen(false)}
-            className="relative flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold text-white rounded-xl overflow-hidden shadow-[0_4px_14px_rgba(26,110,181,0.35)] active:scale-[0.98] transition-transform"
+            className="relative flex items-center justify-center gap-2 w-full py-3.5 text-sm font-semibold text-white rounded-xl overflow-hidden shadow-[0_4px_14px_rgba(26,110,181,0.35)] active:scale-[0.98] transition-transform mt-2"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-[#1A6EB5] to-[#0D3B6E]" />
             <Sparkles className="relative w-3.5 h-3.5 text-[#3EC88A]" />

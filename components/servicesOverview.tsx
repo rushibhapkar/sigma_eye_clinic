@@ -15,7 +15,7 @@ import {
   Syringe,
 } from "lucide-react";
 import { eyeServices, maternityServices } from "@/lib/data";
-
+import Image from "next/image";
 const categories = [
   {
     key: "eye",
@@ -24,6 +24,7 @@ const categories = [
     description:
       "Advanced diagnostics and surgical expertise — from routine exams to complex retinal and refractive procedures.",
     icon: Eye,
+    image: "/sigma_eye_clinic/assets/lab.jpeg",
     href: "/services#eye",
     linkText: "View All Eye Services",
     accent: "hsl(210,74%,40%)",
@@ -42,6 +43,7 @@ const categories = [
     description:
       "Compassionate women's health from conception through delivery — with specialists dedicated to safe, joyful motherhood.",
     icon: Heart,
+    image: null,
     href: "/services#maternity",
     linkText: "View All Maternity Services",
     accent: "hsl(151,56%,42%)",
@@ -96,84 +98,90 @@ export function ServicesOverview() {
           {categories.map((cat, idx) => {
             const Icon = cat.icon;
             return (
-              <div
-                key={cat.key}
-                className={`
-                  group relative rounded-[var(--radius)] border ${cat.borderColor}
-                  overflow-hidden bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo}
-                  shadow-blue-soft hover:shadow-blue-md
-                  hover:-translate-y-1.5 transition-all duration-300 ease-out
-                  animate-fade-in-up
-                `}
-                style={{ animationDelay: `${100 + idx * 150}ms` }}
-              >
+             <div
+  key={cat.key}
+  className={`
+    group relative rounded-2xl overflow-hidden border ${cat.borderColor}
+    bg-white
+    shadow-blue-soft hover:shadow-blue-md
+    hover:-translate-y-1.5 transition-all duration-300 ease-out
+    animate-fade-in-up
+  `}
+  style={{ animationDelay: `${100 + idx * 150}ms` }}
+>
 
-                {/* Decorative circle — top right */}
-                <div
-                  className="absolute -top-10 -right-10 w-36 h-36 rounded-full pointer-events-none opacity-40"
-                  style={{ background: cat.accentMid }}
-                />
+  {/* ── Full image (or gradient fallback) ── */}
+  <div className="relative h-64 sm:h-72">
+    {cat.image ? (
+      <Image
+        src={cat.image}
+        alt={cat.label}
+        fill
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    ) : (
+      <div
+        className="w-full h-full flex items-center justify-center"
+        style={{ background: `linear-gradient(135deg, ${cat.accent}, ${cat.accentMid})` }}
+      >
+        <Icon className="w-16 h-16 text-white/90" />
+      </div>
+    )}
 
-                {/* Diagonal accent bar — bottom left */}
-                <div
-                  className="absolute bottom-0 left-0 w-1.5 h-full rounded-r-full opacity-60 transition-all duration-300 group-hover:opacity-100 group-hover:w-2"
-                  style={{ background: cat.accent }}
-                />
+    {/* Very light overlay — just enough for badge contrast, lab stays fully visible */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background: "linear-gradient(to bottom, rgba(13,59,110,0.20) 0%, transparent 35%, transparent 100%)",
+      }}
+    />
 
-                <div className="relative z-10 p-7 sm:p-8">
+    {/* Tagline badge — top left */}
+    <span className="absolute top-4 left-4 inline-flex items-center gap-1.5 text-xs font-semibold px-3.5 py-2 rounded-full bg-white/95 shadow-sm" style={{ color: cat.accent }}>
+      <Icon className="w-3.5 h-3.5" />
+      {cat.tagline}
+    </span>
+  </div>
 
-                  {/* Top row: icon + label pill */}
-                  <div className="flex items-start justify-between mb-5">
-                    <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center shadow-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
-                      style={{ background: cat.accent }}
-                    >
-                      <Icon className="w-7 h-7 text-white" />
-                    </div>
-                    <span className={`text-[11px] font-semibold px-3 py-1.5 rounded-full ${cat.badgeBg}`}>
-                      {cat.tagline}
-                    </span>
-                  </div>
+  {/* ── Light content panel ── */}
+  <div className={`relative px-7 sm:px-8 pb-6 pt-5 bg-gradient-to-br ${cat.gradientFrom} ${cat.gradientTo}`}>
+    <h3 className="text-2xl font-bold text-foreground mb-1.5">{cat.label}</h3>
+    <p className="text-sm text-muted-foreground leading-relaxed mb-4">{cat.description}</p>
 
-                  {/* Title + description */}
-                  <h3 className="text-2xl font-bold text-foreground mb-2">{cat.label}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">{cat.description}</p>
+    {/* Service list — 2-col grid */}
+    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 mb-5">
+      {cat.services.map((s) => (
+        <li key={s.id} className="flex items-center gap-2 text-sm text-foreground/80">
+          <span
+            className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center"
+            style={{ background: cat.accentMid }}
+          >
+            <CheckCircle2 className="w-3 h-3" style={{ color: cat.accent }} />
+          </span>
+          {s.title}
+        </li>
+      ))}
+    </ul>
 
-                  {/* Service list — 2-col grid */}
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2.5 mb-7">
-                    {cat.services.map((s) => (
-                      <li key={s.id} className="flex items-center gap-2 text-sm text-foreground/80">
-                        <span
-                          className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center"
-                          style={{ background: cat.accentMid }}
-                        >
-                          <CheckCircle2 className="w-3 h-3" style={{ color: cat.accent }} />
-                        </span>
-                        {s.title}
-                      </li>
-                    ))}
-                  </ul>
+    {/* Divider */}
+    <div className="h-px bg-black/5 mb-4" />
 
-                  {/* Divider */}
-                  <div className="h-px bg-black/5 mb-5" />
-
-                  {/* CTA */}
-                  <Link
-                    href={cat.href}
-                    className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-200 hover:gap-3"
-                    style={{ color: cat.accent }}
-                  >
-                    {cat.linkText}
-                    <span
-                      className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                      style={{ background: cat.accentMid }}
-                    >
-                      <ChevronRight className="w-3.5 h-3.5" style={{ color: cat.accent }} />
-                    </span>
-                  </Link>
-
-                </div>
-              </div>
+    {/* CTA */}
+    <Link
+      href={cat.href}
+      className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-200 hover:gap-3"
+      style={{ color: cat.accent }}
+    >
+      {cat.linkText}
+      <span
+        className="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110"
+        style={{ background: cat.accentMid }}
+      >
+        <ChevronRight className="w-3.5 h-3.5" style={{ color: cat.accent }} />
+      </span>
+    </Link>
+  </div>
+</div>
             );
           })}
         </div>

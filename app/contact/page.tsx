@@ -12,7 +12,7 @@ import {
   ArrowRight,
   ExternalLink,
 } from "lucide-react";
-import { clinicInfo } from "@/lib/data";
+import { clinicInfo, doctors } from "@/lib/data";
 
 const contactCards = [
   {
@@ -61,27 +61,47 @@ const contactCards = [
   },
 ];
 
-const serviceOptions = [
-  { group: "Eye Care", options: ["Comprehensive Eye Exam", "Cataract Surgery", "LASIK & Refractive Surgery", "Glaucoma Management", "Diabetic Eye Care", "Pediatric Ophthalmology"] },
-  { group: "Maternity & Women's Health", options: ["Prenatal Care", "Normal & Cesarean Delivery", "High-Risk Pregnancy", "Fertility & IVF Consultation", "Gynecological Services", "Vaccination & Immunization"] },
-];
+const timeSlots = ["9:00 AM", "11:30 AM", "2:00 PM", "4:30 PM", "6:00 PM"];
+
+// Clinic's WhatsApp number — country code, no + or spaces
+const CLINIC_WHATSAPP = "919579744727";
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState<"idle" | "success">("idle");
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    name: "", phone: "", email: "", service: "", message: "",
+    name: "",
+    phone: "",
+    date: "",
+    time: "",
+    doctor: "",
+    message: "",
   });
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormState("success");
-    setFormData({ name: "", phone: "", email: "", service: "", message: "" });
-    setTimeout(() => setFormState("idle"), 5000);
-  };
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setFormData((p) => ({ ...p, [k]: e.target.value }));
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const selectedDoctorName =
+      doctors.find((d) => d.id === formData.doctor)?.name || "No preference";
+
+    const message = `Hello ${clinicInfo.name}, I'd like to book an appointment.
+
+*Name:* ${formData.name}
+*Phone:* ${formData.phone}
+*Preferred Date:* ${formData.date}
+*Preferred Time:* ${formData.time || "Any"}
+*Doctor:* ${selectedDoctorName}
+${formData.message ? `*Message:* ${formData.message}` : ""}`;
+
+    const whatsappUrl = `https://wa.me/${CLINIC_WHATSAPP}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+
+    setSubmitted(true);
+    setFormData({ name: "", phone: "", date: "", time: "", doctor: "", message: "" });
+    setTimeout(() => setSubmitted(false), 5000);
+  };
   return (
     <main className="bg-background">
 
@@ -194,16 +214,16 @@ export default function ContactPage() {
                     Fill in the details below and we&apos;ll confirm your slot within 24 hours.
                   </p>
 
-                  {formState === "success" && (
+                  {submitted && (
                     <div className="mb-6 p-4 rounded-xl border flex items-start gap-3 animate-fade-in"
                       style={{ background: "hsl(151,70%,97%)", borderColor: "hsl(151,40%,80%)" }}>
                       <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: "hsl(151,56%,42%)" }} />
                       <div>
                         <p className="text-sm font-semibold" style={{ color: "hsl(151,58%,28%)" }}>
-                          Request submitted!
+                          Opening WhatsApp…
                         </p>
                         <p className="text-xs mt-0.5" style={{ color: "hsl(151,40%,40%)" }}>
-                          Our team will call you back to confirm your appointment.
+                          Just hit send on WhatsApp to confirm your appointment request.
                         </p>
                       </div>
                     </div>
@@ -229,30 +249,48 @@ export default function ContactPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-semibold text-foreground mb-1.5 tracking-wide">Email Address</label>
-                      <input
-                        type="email" value={formData.email} onChange={set("email")}
-                        className="w-full h-11 px-4 rounded-xl border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
-                        placeholder="your@email.com"
-                      />
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-foreground mb-1.5 tracking-wide">Preferred Date *</label>
+                        <input
+                          type="date" required value={formData.date} onChange={set("date")}
+                          min={new Date().toISOString().split("T")[0]}
+                          className="w-full h-11 px-4 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-semibold text-foreground mb-1.5 tracking-wide">Select Doctor *</label>
+                        <select
+                          required value={formData.doctor} onChange={set("doctor")}
+                          className="w-full h-11 px-4 rounded-xl border border-input bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
+                        >
+                          <option value="">Choose a doctor</option>
+                          {doctors.map((d) => (
+                            <option key={d.id} value={d.id}>{d.name}</option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-foreground mb-1.5 tracking-wide">Service Required *</label>
-                      <select
-                        required value={formData.service} onChange={set("service")}
-                        className="w-full h-11 px-4 rounded-xl border border-input bg-background text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
-                      >
-                        <option value="">Select a service</option>
-                        {serviceOptions.map((g) => (
-                          <optgroup key={g.group} label={g.group}>
-                            {g.options.map((o) => (
-                              <option key={o} value={o.toLowerCase().replace(/ /g, "-")}>{o}</option>
-                            ))}
-                          </optgroup>
+                      <label className="block text-xs font-semibold text-foreground mb-2 tracking-wide">Preferred Time</label>
+                      <div className="flex flex-wrap gap-2">
+                        {timeSlots.map((slot) => (
+                          <button
+                            key={slot}
+                            type="button"
+                            onClick={() => setFormData((f) => ({ ...f, time: slot }))}
+                            className={`px-3.5 py-2 rounded-full text-xs font-semibold border transition-all ${
+                              formData.time === slot
+                                ? "text-white border-transparent"
+                                : "text-foreground/70 border-input bg-background hover:border-primary/40"
+                            }`}
+                            style={formData.time === slot ? { background: "hsl(210,74%,40%)" } : undefined}
+                          >
+                            {slot}
+                          </button>
                         ))}
-                      </select>
+                      </div>
                     </div>
 
                     <div>
@@ -260,7 +298,7 @@ export default function ContactPage() {
                       <textarea
                         rows={4} value={formData.message} onChange={set("message")}
                         className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow resize-none"
-                        placeholder="Describe your concern or preferred appointment time..."
+                        placeholder="Any specific concern or request..."
                       />
                     </div>
 
@@ -270,7 +308,7 @@ export default function ContactPage() {
                       style={{ background: "linear-gradient(135deg, hsl(210,74%,40%) 0%, hsl(151,56%,42%) 100%)" }}
                     >
                       <Send className="w-4 h-4" />
-                      Submit Appointment Request
+                      Confirm via WhatsApp
                     </button>
                   </form>
                 </div>

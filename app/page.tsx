@@ -16,6 +16,7 @@ import { HeroSection } from "@/components/heros";
 import AboutPage from "@/app/about/page";
 import { ServicesOverview } from "@/components/servicesOverview";
 import { WhyChooseUs } from "@/components/whyChooseUs";
+import { VideoStoriesSection } from "@/components/video-stories";
 
 
 
@@ -50,12 +51,14 @@ function StatsSection() {
   );
 }
 
+
+
 function TestimonialsSection() {
   return (
     <section className="py-20 lg:py-28 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal>
-          <div className="text-center max-w-2xl mx-auto mb-16">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <span className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
               Patient Stories
             </span>
@@ -65,6 +68,44 @@ function TestimonialsSection() {
             <p className="text-muted-foreground text-lg">
               Real experiences from families who trusted us with their care.
             </p>
+          </div>
+        </ScrollReveal>
+
+        {/* ── Featured Testimonial with real photo ── */}
+        <ScrollReveal>
+          <div className="mb-12 rounded-2xl overflow-hidden border border-border/50 shadow-blue-soft bg-muted/20">
+            <div className="grid sm:grid-cols-5">
+
+              {/* Photo */}
+              <div className="relative sm:col-span-2 h-64 sm:h-auto min-h-[260px]">
+                <Image
+                  src="/sigma_eye_clinic/assets/img1.jpeg"
+                  alt="Happy patient testimonial"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+
+              {/* Quote content */}
+              <div className="sm:col-span-3 p-7 sm:p-10 flex flex-col justify-center">
+                <Quote className="w-9 h-9 text-primary/25 mb-4" />
+                <p className="text-base sm:text-lg text-foreground leading-relaxed mb-5 font-medium">
+                  "The care and attention I received here gave me back my confidence.
+                  The doctors explained everything clearly and the whole team made me
+                  feel comfortable throughout my treatment."
+                </p>
+                <div className="flex items-center gap-1 mb-4">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">Patient Name</p>
+                  <p className="text-xs text-muted-foreground">Cataract Surgery</p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </ScrollReveal>
 
@@ -152,10 +193,13 @@ export default function Home() {
     <main>
       <HeroSection  />
       <AboutPage/>
+        <VideoStoriesSection />
       <ServicesOverview />
       <WhyChooseUs />
       <StatsSection />
       <TestimonialsSection />
+    
+
       <CTASection />
     </main>
   );

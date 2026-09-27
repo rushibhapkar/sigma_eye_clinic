@@ -19,8 +19,7 @@ import {
   Star,
   ChevronRight
 } from "lucide-react";
-import dr1 from "@/assets/dr1.jpeg";
-import dr2 from "@/assets/dr2.jpeg";
+
 export const clinicInfo = {
   name: "Sigma Eye and Mother Care Clinic",
   tagline: "Leading Eye & Maternity Hospital - Bringing Brightness in Your Life",
@@ -179,7 +178,7 @@ export const doctors = [
     qualification: "MBBS, MS OPHTHALMOLOGY",
     experience: "Fellowship in Vitreoretinal Surgery & ROP",
     bio: "Consultant at PBMS's H.V. Desai Hospital. Specialized in advanced retinal evaluation and microsurgeries.",
-    image: dr1,
+    image: "/sigma_eye_clinic/assets/dr1.jpeg",
   },
   {
     id: "d2",
@@ -188,7 +187,7 @@ export const doctors = [
     qualification: "MBBS, MS OBSTETRICS AND GYNAECOLOGY",
     experience: "Fellowship in Fetal Medicine",
     bio: "Working in Nobel Multispecialty Hospital. Expert in comprehensive maternity care and fetal medicine.",
-    image: dr2,
+    image: "/sigma_eye_clinic/assets/dr2.jpeg",
   },
 ];
 
