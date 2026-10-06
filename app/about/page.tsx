@@ -44,7 +44,12 @@ const doctorMeta: Record<
     heroBg: "from-[hsl(210,80%,97%)] via-[hsl(210,70%,93%)] to-[hsl(210,60%,88%)]",
     accentBadgeClass: "bg-[hsl(210,75%,93%)] text-[hsl(210,74%,32%)]",
     btnBg: "hsl(210,74%,40%)",
-    tags: ["Cataract Surgery", "LASIK / SMILE", "Retinal Care", "Glaucoma"],
+    tags: [
+      "Vitreoretinal Surgery",
+      "Phaco Cataract (Premium IOL)",
+      "Diabetic Retinopathy",
+      "LASIK & ROP Care",
+    ],
     floatLabel: "Ophthalmology",
   },
   d2: {
@@ -55,8 +60,13 @@ const doctorMeta: Record<
     heroBg: "from-[hsl(151,70%,97%)] via-[hsl(151,60%,92%)] to-[hsl(151,50%,86%)]",
     accentBadgeClass: "bg-[hsl(151,65%,92%)] text-[hsl(151,58%,28%)]",
     btnBg: "hsl(151,56%,42%)",
-    tags: ["High-Risk Pregnancy", "Laparoscopy", "IVF Consultation", "Gynecology"],
-    floatLabel: "OB-GYN",
+    tags: [
+      "Fetal Medicine",
+      "High-Risk Pregnancy",
+      "Pregnancy Ultrasound",
+      "Preconception Care",
+    ],
+    floatLabel: "OB-GYN & Fetal Medicine",
   },
 };
 

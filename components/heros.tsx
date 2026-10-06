@@ -2,8 +2,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Star, Phone, CircleCheck as CheckCircle2, Eye,ChevronDown, Heart, Shield, Award } from "lucide-react";
+import { ArrowRight, Star, Phone, CircleCheck as CheckCircle2, Eye, ChevronDown, Heart, Shield, Award } from "lucide-react";
 import { clinicInfo, stats } from "@/lib/data";
+
+const heroImages = [
+  {
+    src: "/sigma_eye_clinic/assets/img3-eye.jpeg",
+    alt: "Eye examination at Sigma Eye Clinic",
+    label: "Eye Care",
+  },
+  {
+    src: "/sigma_eye_clinic/assets/img3-gyno.png",
+    alt: "Maternity consultation at Sigma Mother Care",
+    label: "Maternity Care",
+  },
+];
+
+
+
 
 
 const PHONE_NUMBERS = [
@@ -15,7 +31,14 @@ const PHONE_NUMBERS = [
 export function HeroSection() {
   const [callMenuOpen, setCallMenuOpen] = useState(false);
   const callRef = useRef<HTMLDivElement>(null);
+  const [activeImage, setActiveImage] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveImage((prev) => (prev + 1) % heroImages.length);
+    }, 4000); // switches every 4 seconds
+    return () => clearInterval(interval);
+  }, []);
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -46,11 +69,11 @@ export function HeroSection() {
           }} />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-32 w-full">
-        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:py-20 lg:py-32 w-full">
+                <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 lg:gap-16 items-center">
 
           {/* ── LEFT CONTENT ── */}
-          <div className="space-y-6 sm:space-y-8">
+          <div className="space-y-6 sm:space-y-8 order-2 lg:order-1">
 
             {/* Badge */}
             <div
@@ -112,108 +135,107 @@ export function HeroSection() {
               genuinely cares about your health.
             </p>
 
-{/* Feature Pills */}
-      <div
-        className="flex flex-wrap gap-2 sm:gap-3 animate-fade-in-up"
-        style={{ animationDelay: "300ms" }}
-      >
-        {[
-          { icon: Eye, label: "Eye Specialist" },
-          { icon: Heart, label: "Maternity Care" },
-          { icon: Shield, label: "NABH Accredited" },
-          { icon: Award, label: "Award Winning" },
-        ].map(({ icon: Icon, label }) => (
-          <div
-            key={label}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
-            style={{
-              background: "#fff",
-              border: "1px solid #C8DEFA",
-              color: "#1A6EB5",
-              boxShadow: "0 2px 8px rgba(26,110,181,0.08)",
-            }}
-          >
-            <Icon className="w-3.5 h-3.5" />
-            {label}
-          </div>
-        ))}
-      </div>
+            {/* Feature Pills */}
+            <div
+              className="flex flex-wrap gap-2 sm:gap-3 animate-fade-in-up"
+              style={{ animationDelay: "300ms" }}
+            >
+              {[
+                { icon: Eye, label: "Eye Specialist" },
+                { icon: Heart, label: "Maternity Care" },
+                { icon: Shield, label: "NABH Accredited" },
+                { icon: Award, label: "Award Winning" },
+              ].map(({ icon: Icon, label }) => (
+                <div
+                  key={label}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                  style={{
+                    background: "#fff",
+                    border: "1px solid #C8DEFA",
+                    color: "#1A6EB5",
+                    boxShadow: "0 2px 8px rgba(26,110,181,0.08)",
+                  }}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  {label}
+                </div>
+              ))}
+            </div>
 
-      {/* CTA Buttons */}
-      <div
-        className="flex flex-col xs:flex-row sm:flex-row gap-3 sm:gap-4 animate-fade-in-up relative z-20"
-        style={{ animationDelay: "400ms" }}
-      >
-        <Link
-          href="/contact"
-          className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-white rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
-          style={{
-            background: "linear-gradient(135deg, #1A6EB5 0%, #0C4070 100%)",
-            boxShadow: "0 8px 28px rgba(26,110,181,0.35)",
-          }}
-        >
-          Book Appointment
-          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-        </Link>
+            {/* CTA Buttons */}
+            <div
+              className="flex flex-col xs:flex-row sm:flex-row gap-3 sm:gap-4 animate-fade-in-up relative z-20"
+              style={{ animationDelay: "400ms" }}
+            >
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-white rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
+                style={{
+                  background: "linear-gradient(135deg, #1A6EB5 0%, #0C4070 100%)",
+                  boxShadow: "0 8px 28px rgba(26,110,181,0.35)",
+                }}
+              >
+                Book Appointment
+                <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
 
-        {/* Interactive Dropdown Button for 3 Phone Numbers */}
-        <div className="relative" ref={callRef}>
-          <button
-            type="button"
-            onClick={() => setCallMenuOpen(!callMenuOpen)}
-            onMouseEnter={() => setCallMenuOpen(true)}
-            className="group w-full inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
-            style={{
-              background: "#fff",
-              border: "1.5px solid #C8DEFA",
-              color: "#1A6EB5",
-              boxShadow: "0 4px 16px rgba(26,110,181,0.10)",
-            }}
-            aria-expanded={callMenuOpen}
-          >
-            <Phone className="w-4 h-4" />
-            <span>Call Us Now</span>
-            <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 ${
-                callMenuOpen ? "rotate-180 text-[#0C4070]" : ""
-              }`}
-            />
-          </button>
+              {/* Interactive Dropdown Button for 3 Phone Numbers */}
+              <div className="relative" ref={callRef}>
+                <button
+                  type="button"
+                  onClick={() => setCallMenuOpen(!callMenuOpen)}
+                  onMouseEnter={() => setCallMenuOpen(true)}
+                  className="group w-full inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold rounded-2xl transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+                  style={{
+                    background: "#fff",
+                    border: "1.5px solid #C8DEFA",
+                    color: "#1A6EB5",
+                    boxShadow: "0 4px 16px rgba(26,110,181,0.10)",
+                  }}
+                  aria-expanded={callMenuOpen}
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Call Us Now</span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-200 ${callMenuOpen ? "rotate-180 text-[#0C4070]" : ""
+                      }`}
+                  />
+                </button>
 
-          {/* Phone Numbers Popover Card */}
-          {callMenuOpen && (
-            <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-64 bg-white rounded-2xl shadow-[0_12px_32px_rgba(26,110,181,0.18)] border border-[#C8DEFA] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
-              <div className="px-2 py-1.5 mb-1 border-b border-[#EBF4FF]">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[#5A7FA8]">
-                  Select Direct Helpline
-                </p>
-              </div>
-              <div className="space-y-1">
-                {PHONE_NUMBERS.map((item, idx) => (
-                  <a
-                    key={idx}
-                    href={`tel:${item.number}`}
-                    className="flex items-center justify-between p-2 rounded-xl hover:bg-[#EBF4FF] transition-colors group/item text-left"
-                  >
-                    <div>
-                      <p className="text-[11px] font-medium text-[#5A7FA8]">
-                        {item.label}
-                      </p>
-                      <p className="text-sm font-bold text-[#0D3B6E] group-hover/item:text-[#1A6EB5] transition-colors">
-                        {item.display}
+                {/* Phone Numbers Popover Card */}
+                {callMenuOpen && (
+                  <div className="absolute left-0 sm:left-auto sm:right-0 top-full mt-2 w-full sm:w-64 bg-white rounded-2xl shadow-[0_12px_32px_rgba(26,110,181,0.18)] border border-[#C8DEFA] p-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="px-2 py-1.5 mb-1 border-b border-[#EBF4FF]">
+                      <p className="text-[11px] font-semibold uppercase tracking-wider text-[#5A7FA8]">
+                        Select Direct Helpline
                       </p>
                     </div>
-                    <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#1A6EB5]/10 text-[#1A6EB5] group-hover/item:bg-[#1A6EB5] group-hover/item:text-white transition-colors">
-                      <Phone className="w-3.5 h-3.5" />
-                    </span>
-                  </a>
-                ))}
+                    <div className="space-y-1">
+                      {PHONE_NUMBERS.map((item, idx) => (
+                        <a
+                          key={idx}
+                          href={`tel:${item.number}`}
+                          className="flex items-center justify-between p-2 rounded-xl hover:bg-[#EBF4FF] transition-colors group/item text-left"
+                        >
+                          <div>
+                            <p className="text-[11px] font-medium text-[#5A7FA8]">
+                              {item.label}
+                            </p>
+                            <p className="text-sm font-bold text-[#0D3B6E] group-hover/item:text-[#1A6EB5] transition-colors">
+                              {item.display}
+                            </p>
+                          </div>
+                          <span className="flex items-center justify-center w-7 h-7 rounded-full bg-[#1A6EB5]/10 text-[#1A6EB5] group-hover/item:bg-[#1A6EB5] group-hover/item:text-white transition-colors">
+                            <Phone className="w-3.5 h-3.5" />
+                          </span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          )}
-        </div>
-      </div>
- 
+
             {/* Social Proof */}
             <div
               className="flex items-center gap-4 sm:gap-6 pt-2 animate-fade-in-up"
@@ -251,52 +273,53 @@ export function HeroSection() {
           </div>
 
           {/* ── RIGHT IMAGE ── */}
-          <div className="relative hidden lg:flex justify-center animate-fade-in" style={{ animationDelay: "200ms" }}>
+          <div className="relative flex justify-center animate-fade-in w-full max-w-md mx-auto order-1 lg:order-2" style={{ animationDelay: "200ms" }}>
 
             {/* Main image card */}
             <div
-              className="relative w-[440px] h-[560px] rounded-3xl overflow-hidden"
-              style={{ boxShadow: "0 32px 80px rgba(13,59,110,0.22)" }}
+              className="relative w-full max-w-[360px] h-[320px] sm:max-w-[400px] sm:h-[420px] lg:w-[440px] lg:h-[560px] rounded-3xl overflow-hidden"
+              style={{ boxShadow: "0 32px 80px rgba(13,59,110,0.22)", background: "#fdf6f8" }}
             >
-<Image
-  src="/sigma_eye_clinic/assets/img3.jpeg"
-  alt="Modern eye clinic facility"
-  fill
-  className="object-cover"
-  priority
-/>
-              {/* Overlay gradient */}
-              <div className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(13,59,110,0.35) 0%, transparent 55%)" }} />
+              {heroImages.map((img, i) => (
+                <Image
+                  key={img.src}
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-contain transition-opacity duration-1000 ease-in-out"
+                  style={{ opacity: activeImage === i ? 1 : 0 }}
+                  priority={i === 0}
+                />
+              ))}
 
-              {/* Bottom overlay text */}
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div
-                  className="backdrop-blur-md rounded-2xl p-4"
-                  style={{
-                    background: "rgba(255,255,255,0.15)",
-                    border: "1px solid rgba(255,255,255,0.25)"
-                  }}
+              {/* Image indicator dots */}
+              <div className="absolute top-4 right-4 z-10 flex gap-1.5">
+                {heroImages.map((_, i) => (
+                  <span
+                    key={i}
+                    className="w-1.5 h-1.5 rounded-full transition-all duration-300"
+                    style={{
+                      background: activeImage === i ? "#fff" : "rgba(255,255,255,0.4)",
+                      width: activeImage === i ? "18px" : "6px",
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Specialty label, changes with image */}
+              <div className="absolute top-4 left-4 z-10">
+                <span
+                  className="px-3 py-1.5 rounded-full text-[11px] font-semibold text-white backdrop-blur-sm transition-all duration-500"
+                  style={{ background: "rgba(13,59,110,0.55)" }}
                 >
-                  <p className="text-white text-sm font-semibold mb-2">Today's Availability</p>
-                  <div className="flex gap-2 flex-wrap">
-                    {["9:00 AM", "11:30 AM", "2:00 PM", "4:30 PM"].map((time) => (
-                      <span
-                        key={time}
-                        className="px-2.5 py-1 rounded-lg text-xs font-bold text-white"
-                        style={{ background: "rgba(62,200,138,0.75)" }}
-                      >
-                        {time}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                  {heroImages[activeImage].label}
+                </span>
               </div>
             </div>
 
-            {/* Floating card — Years */}
+            {/* Floating card — Years (Desktop / Tablet) */}
             <div
-              className="absolute -left-12 top-1/3 rounded-2xl p-4 animate-float"
+              className="hidden sm:flex absolute -left-12 top-1/3 rounded-2xl p-4 animate-float"
               style={{
                 background: "#fff",
                 boxShadow: "0 12px 40px rgba(26,110,181,0.18)",
@@ -317,9 +340,9 @@ export function HeroSection() {
               </div>
             </div>
 
-            {/* Floating card — Rating */}
+            {/* Floating card — Rating (Desktop / Tablet) */}
             <div
-              className="absolute -right-10 top-16 rounded-2xl p-4 animate-float animation-delay-300"
+              className="hidden sm:flex absolute -right-10 top-16 rounded-2xl p-4 animate-float animation-delay-300"
               style={{
                 background: "#fff",
                 boxShadow: "0 12px 40px rgba(26,110,181,0.18)",
@@ -342,7 +365,7 @@ export function HeroSection() {
 
             {/* Floating card — Patients */}
             <div
-              className="absolute -right-8 bottom-24 rounded-2xl p-4 animate-float animation-delay-600"
+              className="hidden lg:block absolute -right-8 bottom-32 rounded-2xl p-4 animate-float animation-delay-600"
               style={{
                 background: "#fff",
                 boxShadow: "0 12px 40px rgba(26,110,181,0.18)",
@@ -365,11 +388,11 @@ export function HeroSection() {
 
             {/* Decorative ring */}
             <div
-              className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full"
+              className="hidden sm:block absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[520px] rounded-full"
               style={{ border: "1.5px dashed rgba(26,110,181,0.15)" }}
             />
             <div
-              className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[620px] rounded-full"
+              className="hidden sm:block absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[620px] rounded-full"
               style={{ border: "1.5px dashed rgba(62,200,138,0.10)" }}
             />
           </div>
@@ -407,6 +430,24 @@ export function HeroSection() {
               </div>
             </div>
           ))}
+        </div>
+        {/* ── Horizontal Facility Strip ── */}
+        <div
+          className="relative mt-8 sm:mt-10 lg:mt-14 rounded-2xl sm:rounded-3xl overflow-hidden animate-fade-in-up"
+          style={{
+            animationDelay: "700ms",
+            boxShadow: "0 16px 48px rgba(13,59,110,0.16)",
+            background: "#0A1E3D",
+          }}
+        >
+          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9]">
+            <Image
+              src="/sigma_eye_clinic/assets/img4.jpeg"
+              alt="Sigma Eye & Mother Care — Advanced Eye Surgery facility"
+              fill
+              className="object-contain"
+            />
+          </div>
         </div>
       </div>
     </section>

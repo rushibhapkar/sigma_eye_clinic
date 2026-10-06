@@ -37,7 +37,7 @@ const socialLinks = [
 
 export function FloatingSocial() {
   return (
-    <div className="fixed bottom-5 right-4 sm:bottom-7 sm:right-6 z-50 flex flex-col gap-3 p-1.5 rounded-full bg-white/30 dark:bg-black/20 backdrop-blur-md border border-white/40 dark:border-white/10 shadow-xl">
+    <div className="fixed bottom-5 right-4 sm:bottom-6 sm:right-5 lg:bottom-6 lg:right-6 z-50 flex flex-col gap-2 sm:gap-2.5">
       {socialLinks.map((s) => (
         <a
           key={s.name}
