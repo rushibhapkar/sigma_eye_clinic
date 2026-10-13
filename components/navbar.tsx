@@ -96,25 +96,21 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 lg:h-[72px]">
             {/* ── Logo ── */}
-<Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
-      {/* Logo Container */}
-      <div className="relative w-10 h-10 sm:w-11 sm:h-11 shrink-0 overflow-hidden rounded-xl">
-        <Image
-          src={LOGO_SRC}
-          alt="Sigma Eye & Mother Care Logo"
-          fill
-          sizes="(max-width: 640px) 40px, 44px"
-          className="object-contain group-hover:scale-105 transition-transform duration-300"
-          priority
-        />
-      </div>
 
-      <div className="flex items-center leading-none whitespace-nowrap overflow-hidden">
-        <span className="text-[15px] sm:text-[17px] font-bold tracking-tight text-[#0D3B6E] group-hover:text-[#1A6EB5] transition-colors duration-200">
-          Sigma Eye & Mother Care
-        </span>
-      </div>
-    </Link>
+{/* ── Logo ── */}
+<Link href="/" className="flex items-center gap-3 shrink-0">
+  <Image
+    src={LOGO_SRC}
+    alt="Sigma Eye & Mother Care logo"
+    width={44}
+    height={44}
+    className="h-10 w-10 lg:h-11 lg:w-11 rounded-xl object-contain"
+    priority
+  />
+  <span className="text-[17px] lg:text-lg font-bold tracking-tight leading-[1.4] pb-0.5 text-[#0D3B6E] whitespace-nowrap">
+    Sigma Eye &amp; Mother Care
+  </span>
+</Link>
 
             {/* ── Desktop Nav ── */}
             <nav
@@ -222,7 +218,7 @@ export function Navbar() {
 
               {/* Book Appointment Button */}
               <Link
-                href="/contact"
+                href="/contact#appointment-form"
                 className="group relative inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-white rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_6px_20px_rgba(26,110,181,0.4)] active:scale-[0.97]"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-[#1A6EB5] to-[#0D3B6E]" />

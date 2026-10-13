@@ -1,7 +1,7 @@
 "use client";
 // app/contact/page.tsx
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Phone,
   Mail,
@@ -76,6 +76,15 @@ export default function ContactPage() {
     doctor: "",
     message: "",
   });
+  // Automatically scroll to the form if the URL has #appointment-form hash
+  useEffect(() => {
+    if (window.location.hash === "#appointment-form") {
+      const formElement = document.getElementById("appointment-form");
+      if (formElement) {
+        formElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, []);
 
   const set = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setFormData((p) => ({ ...p, [k]: e.target.value }));
@@ -193,8 +202,7 @@ ${formData.message ? `*Message:* ${formData.message}` : ""}`;
       </section>
 
       {/* ══ FORM + MAP ══ */}
-      <section className="py-16 lg:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="appointment-form" className="py-16 lg:py-24 bg-white scroll-mt-28">        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
 
             {/* ── Form (3 cols) ── */}

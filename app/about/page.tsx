@@ -16,10 +16,10 @@ import {
 import { doctors, clinicInfo } from "@/lib/data";
 
 const clinicStats = [
-  { value: "22+", label: "Years Active" },
-  { value: "18k+", label: "Patients Served" },
+  { value: "12+", label: "Years Active" },
+  { value: "10k+", label: "Patients Served" },
   { value: "97%", label: "Satisfaction" },
-  { value: "2", label: "Specialities" },
+  { value: "2+", label: "Specialities" },
 ];
 
 const doctorMeta: Record<
@@ -37,9 +37,9 @@ const doctorMeta: Record<
   }
 > = {
   d1: {
-    availableDays: "Mon – Sat, 9am – 6pm",
-    floor: "Clinic A, 1st Floor",
-    rating: 4.9,
+    availableDays: "Mon – Sat, 10am – 10pm",
+    floor: " Ground Floor",
+    rating: 5.0,
     specialtyIcon: <Eye className="w-3.5 h-3.5" />,
     heroBg: "from-[hsl(210,80%,97%)] via-[hsl(210,70%,93%)] to-[hsl(210,60%,88%)]",
     accentBadgeClass: "bg-[hsl(210,75%,93%)] text-[hsl(210,74%,32%)]",
@@ -53,9 +53,9 @@ const doctorMeta: Record<
     floatLabel: "Ophthalmology",
   },
   d2: {
-    availableDays: "Tue – Sun, 10am – 7pm",
-    floor: "Clinic B, Ground Floor",
-    rating: 4.9,
+    availableDays: "Mon – Sat, 10am – 10pm",
+    floor: " Ground Floor",
+    rating: 5.0,
     specialtyIcon: <Stethoscope className="w-3.5 h-3.5" />,
     heroBg: "from-[hsl(151,70%,97%)] via-[hsl(151,60%,92%)] to-[hsl(151,50%,86%)]",
     accentBadgeClass: "bg-[hsl(151,65%,92%)] text-[hsl(151,58%,28%)]",
@@ -188,26 +188,32 @@ export default function AboutPage() {
                     }}
                   />
 
-                  {/* Floating badge — specialty (top-left) */}
-                  <div className="absolute top-3 left-3 z-10 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 border border-white shadow-sm backdrop-blur-sm">
-                    <span className="w-2 h-2 rounded-full shrink-0" style={{ background: meta.btnBg }} />
-                    <span className="text-[11px] font-semibold text-foreground leading-none">
-                      {meta.floatLabel}
-                    </span>
+                  {/* Floating badges: stacked on mobile/tablet, side by side on large screens */}
+                  <div className="absolute top-3 left-3 right-3 z-10 flex flex-col items-start gap-2 lg:flex-row lg:items-start lg:justify-between">
+
+                    {/* Specialty */}
+                    <div className="max-w-full flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 border border-white shadow-sm backdrop-blur-sm">
+                      <span className="w-2 h-2 rounded-full shrink-0" style={{ background: meta.btnBg }} />
+                      <span className="text-[11px] font-semibold text-foreground leading-tight">
+                        {meta.floatLabel}
+                      </span>
+                    </div>
+
+                    {/* Experience */}
+                    <div className="max-w-full flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 border border-white shadow-sm backdrop-blur-sm">
+                      <Award className="w-3 h-3 shrink-0" style={{ color: meta.btnBg }} />
+                      <span className="text-[11px] font-semibold text-foreground leading-tight">
+                        {doc.experience}
+                      </span>
+                    </div>
+
                   </div>
 
-                  {/* Floating badge — experience (top-right) */}
-                  <div className="absolute top-3 right-3 z-10 flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-white/90 border border-white shadow-sm backdrop-blur-sm">
-                    <Award className="w-3 h-3 shrink-0" style={{ color: meta.btnBg }} />
-                    <span className="text-[11px] font-semibold text-foreground leading-none">
-                      {doc.experience}
-                    </span>
-                  </div>
-
-                  {/* ── Big doctor photo ── */}
-                  <div className="flex justify-center items-end pt-10 px-6 pb-0">
-                    <div
-                      className="relative transition-transform duration-500 ease-out group-hover:scale-[1.04] group-hover:-translate-y-2"
+                  {/* ── Big doctor photo (click to open profile) ── */}
+                  <div className="flex justify-center items-end pt-24 lg:pt-10 px-6 pb-0">                    <Link
+                      href={`/doctors/${doc.id}`}
+                      aria-label={`View profile of ${doc.name}`}
+                      className="relative block cursor-pointer transition-transform duration-500 ease-out group-hover:scale-[1.04] group-hover:-translate-y-2"
                       style={{ width: "clamp(160px, 55%, 220px)", aspectRatio: "3/4" }}
                     >
                       <Image
@@ -223,7 +229,7 @@ export default function AboutPage() {
                       <span className="absolute -bottom-2.5 -right-2.5 w-8 h-8 rounded-full bg-accent border-[2.5px] border-white flex items-center justify-center shadow z-10">
                         <CheckCircle2 className="w-4 h-4 text-white" strokeWidth={2.5} />
                       </span>
-                    </div>
+                    </Link>
                   </div>
 
                   {/* Star rating strip inside hero bg */}
@@ -253,11 +259,27 @@ export default function AboutPage() {
                   >
                     {doc.qualification}
                   </p>
-                  <h4 className="text-foreground text-xl font-bold leading-tight mb-1">{doc.name}</h4>
+                  <h4 className="text-foreground text-xl font-bold leading-tight mb-1">
+                    <Link
+                      href={`/doctors/${doc.id}`}
+                      className="hover:underline underline-offset-4 transition-colors"
+                    >
+                      {doc.name}
+                    </Link>
+                  </h4>
 
                   {/* Bio */}
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4 line-clamp-2">{doc.bio}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-2 line-clamp-2">{doc.bio}</p>
 
+                  {/* Profile link */}
+                  <Link
+                    href={`/doctors/${doc.id}`}
+                    className="inline-flex items-center gap-1 text-xs font-semibold mb-4 hover:gap-2 transition-all"
+                    style={{ color: meta.btnBg }}
+                  >
+                    View full profile
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
                   {/* Skill tags */}
                   <div className="flex flex-wrap gap-1.5 mb-4">
                     {meta.tags.map((tag) => (
@@ -281,14 +303,18 @@ export default function AboutPage() {
                         <span className="truncate">{meta.floor}</span>
                       </div>
                     </div>
-                    <Link
-                      href="/contact"
+                    <a
+                      href={`https://wa.me/919579744727?text=${encodeURIComponent(
+                        `Hello ${clinicInfo.name}, I'd like to book an appointment with ${doc.name}. Please share the available slots.`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="shrink-0 inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full text-xs font-semibold text-white transition-all duration-200 hover:scale-[1.04] hover:opacity-90 active:scale-[0.97] shadow-sm"
                       style={{ background: meta.btnBg }}
                     >
                       Book
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    </a>
                   </div>
                 </div>
 
@@ -300,7 +326,7 @@ export default function AboutPage() {
         {/* Bottom CTA */}
         <div className="mt-10 text-center animate-fade-in-up animation-delay-500">
           <p className="text-sm text-muted-foreground mb-3">
-            Have questions? Our team is available {clinicInfo.hours.weekdays} on weekdays.
+            Have questions? Our team is available daily from 10:00 AM to 10:00 PM.
           </p>
           <Link
             href="/contact"

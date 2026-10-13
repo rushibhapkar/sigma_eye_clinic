@@ -26,7 +26,7 @@ export function WhyChooseUs() {
             <span className="block w-8 h-[2px] bg-border rounded-full" />
           </div>
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase mb-4 bg-primary/10 text-primary">
-            Why Arogyam
+            Why Sigma Clinic
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 leading-tight">
             Why Families{" "}
@@ -35,7 +35,7 @@ export function WhyChooseUs() {
             </span>
           </h2>
           <p className="text-muted-foreground text-base leading-relaxed">
-            Medical expertise meets genuine compassion — here's what sets Arogyam apart.
+            Medical expertise meets genuine compassion — here's what sets Sigma Eye & Mother Care apart..
           </p>
         </div>
 

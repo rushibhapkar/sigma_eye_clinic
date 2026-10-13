@@ -91,7 +91,7 @@ export function HeroSection() {
                 <span className="relative inline-flex rounded-full h-2 w-2"
                   style={{ background: "#3EC88A" }} />
               </span>
-              Trusted Healthcare Since 2004
+              Trusted Healthcare Since 2012
             </div>
 
             {/* Headline */}
@@ -131,7 +131,7 @@ export function HeroSection() {
               style={{ color: "#5A7FA8", animationDelay: "200ms" }}
             >
               Expert eye care and compassionate maternity services under one roof.
-              State-of-the-art technology, 20+ years of trust, and a team that
+              State-of-the-art technology, 12+ years of trust, and a team that
               genuinely cares about your health.
             </p>
 
@@ -143,7 +143,7 @@ export function HeroSection() {
               {[
                 { icon: Eye, label: "Eye Specialist" },
                 { icon: Heart, label: "Maternity Care" },
-                { icon: Shield, label: "NABH Accredited" },
+                // { icon: Shield, label: "NABH Accredited" },
                 { icon: Award, label: "Award Winning" },
               ].map(({ icon: Icon, label }) => (
                 <div
@@ -168,7 +168,7 @@ export function HeroSection() {
               style={{ animationDelay: "400ms" }}
             >
               <Link
-                href="/contact"
+                href="/contact#appointment-form"
                 className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-bold text-white rounded-2xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-2xl"
                 style={{
                   background: "linear-gradient(135deg, #1A6EB5 0%, #0C4070 100%)",
@@ -263,10 +263,10 @@ export function HeroSection() {
                   {[1, 2, 3, 4, 5].map((i) => (
                     <Star key={i} className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400 text-amber-400" />
                   ))}
-                  <span className="text-sm font-bold ml-1" style={{ color: "#0D3B6E" }}>4.9</span>
+                  <span className="text-sm font-bold ml-1" style={{ color: "#0D3B6E" }}>5.0</span>
                 </div>
                 <p className="text-xs sm:text-sm" style={{ color: "#5A7FA8" }}>
-                  Trusted by <strong style={{ color: "#1A6EB5" }}>50,000+</strong> patients
+                  Trusted by <strong style={{ color: "#1A6EB5" }}>10,000+</strong> patients
                 </p>
               </div>
             </div>
@@ -334,7 +334,7 @@ export function HeroSection() {
                   <CheckCircle2 className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>20+ Years</p>
+                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>12+ Years</p>
                   <p className="text-xs" style={{ color: "#5A7FA8" }}>of Excellence</p>
                 </div>
               </div>
@@ -357,7 +357,7 @@ export function HeroSection() {
                   <Star className="w-6 h-6 text-white fill-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>4.9 / 5</p>
+                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>5.0</p>
                   <p className="text-xs" style={{ color: "#5A7FA8" }}>Patient Rating</p>
                 </div>
               </div>
@@ -380,7 +380,7 @@ export function HeroSection() {
                   <Heart className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>50,000+</p>
+                  <p className="text-sm font-bold" style={{ color: "#0D3B6E" }}>10,000+</p>
                   <p className="text-xs" style={{ color: "#5A7FA8" }}>Happy Patients</p>
                 </div>
               </div>
@@ -404,10 +404,10 @@ export function HeroSection() {
           style={{ animationDelay: "600ms" }}
         >
           {[
-            { value: "20+", label: "Years Experience", icon: Award, color: "#1A6EB5" },
-            { value: "50K+", label: "Patients Served", icon: Heart, color: "#3EC88A" },
-            { value: "15+", label: "Specialists", icon: Shield, color: "#1A6EB5" },
-            { value: "4.9★", label: "Google Rating", icon: Star, color: "#3EC88A" },
+            { value: "12+", label: "Years Experience", icon: Award, color: "#1A6EB5" },
+            { value: "10K+", label: "Patients Served", icon: Heart, color: "#3EC88A" },
+            { value: "2+", label: "Specialists", icon: Shield, color: "#1A6EB5" },
+            { value: "5.0★", label: "Google Rating", icon: Star, color: "#3EC88A" },
           ].map(({ value, label, icon: Icon, color }) => (
             <div
               key={label}

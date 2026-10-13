@@ -17,7 +17,11 @@ import AboutPage from "@/app/about/page";
 import { ServicesOverview } from "@/components/servicesOverview";
 import { WhyChooseUs } from "@/components/whyChooseUs";
 import { VideoStoriesSection } from "@/components/video-stories";
-
+const phoneNumbers = [
+  { label: "Appointment", number: "9975893339", display: "+91 99758 93339" },
+  { label: "Reception", number: "9579744727", display: "+91 95797 44727" },
+  { label: "Helpline", number: "9881956427", display: "+91 98819 56427" },
+];
 
 
 function StatsSection() {
@@ -89,7 +93,7 @@ function TestimonialsSection() {
               </div>
             </div>
             <a
-              href="https://share.google/XlYIPyyIcV1JBsoIX"
+              href="https://www.google.com/search?kgmid=/g/11s5x8wddh&hl=en-IN&q=Sigma+Eye+and+Mother+Care+Clinic&shem=epsd1,ltae,rimspwouoe&shndl=30&source=sh/x/loc/osrp/m1/4&kgs=eb967691a703cf92&utm_source=epsd1,ltae,rimspwouoe,sh/x/loc/osrp/m1/4"
               target="_blank"
               rel="noopener noreferrer"
               className="shrink-0 inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.03] shadow-sm"
@@ -130,10 +134,12 @@ function TestimonialsSection() {
                     <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
+                {/* 
                 <div>
                   <p className="text-sm font-semibold text-foreground">Patient Name</p>
                   <p className="text-xs text-muted-foreground">Cataract Surgery</p>
-                </div>
+                </div> 
+                */}
               </div>
 
             </div>
@@ -195,7 +201,7 @@ function CTASection() {
                 Whether you need an eye consultation or maternity care, our team
                 is here to help. Schedule your appointment today.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col items-center gap-6">
                 <Link
                   href="/contact"
                   className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-primary bg-white rounded-xl shadow-lg hover:shadow-xl hover:bg-white/95 transition-all duration-200 group"
@@ -203,13 +209,27 @@ function CTASection() {
                   Book Appointment
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <a
-                  href={`tel:${clinicInfo.phone}`}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white border-2 border-white/30 rounded-xl hover:bg-white/10 transition-all duration-200"
-                >
-                  <Phone className="w-4 h-4" />
-                  {clinicInfo.phone}
-                </a>
+
+                <div className="w-full">
+                  <p className="text-white/70 text-sm mb-3">Or call us directly</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {phoneNumbers.map((item) => (
+                      <a
+                        key={item.number}
+                        href={`tel:${item.number}`}
+                        className="flex items-center gap-3 px-3.5 py-3 text-left text-white border-2 border-white/30 rounded-xl hover:bg-white/10 transition-all duration-200"
+                      >
+                        <span className="w-9 h-9 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                          <Phone className="w-4 h-4" />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-[11px] text-white/70 leading-tight">{item.label}</span>
+                          <span className="block text-sm font-semibold leading-tight whitespace-nowrap">{item.display}</span>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -43,7 +43,7 @@ const categories = [
     description:
       "Compassionate women's health from conception through delivery — with specialists dedicated to safe, joyful motherhood.",
     icon: Heart,
-    image: null,
+    image: "/sigma_eye_clinic/assets/OIP.jpeg",
     href: "/services#maternity",
     linkText: "View All Maternity Services",
     accent: "hsl(151,56%,42%)",

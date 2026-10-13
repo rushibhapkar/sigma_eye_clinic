@@ -29,7 +29,7 @@ export function Footer() {
 
       <p className="text-sm text-white/60 leading-relaxed">
         {clinicInfo.tagline}. Providing trusted eye care and compassionate
-        maternity services for over two decades.
+        maternity services for over 5 years.
       </p>
     </div>
 
@@ -85,15 +85,20 @@ export function Footer() {
                 <MapPin className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                 <span className="text-sm text-white/60">{clinicInfo.address}</span>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone className="w-4 h-4 text-primary shrink-0" />
-                <a
-                  href={`tel:${clinicInfo.phone}`}
-                  className="text-sm text-white/60 hover:text-white transition-colors"
-                >
-                  {clinicInfo.phone}
-                </a>
-              </div>
+<div className="flex items-start gap-2">
+  <Phone className="w-4 h-4 text-primary shrink-0 mt-1" />
+  <div className="flex flex-col text-sm text-white/60">
+    <a href="tel:9975893339" className="hover:text-white transition-colors">
+      9975893339
+    </a>
+    <a href="tel:9579744727" className="hover:text-white transition-colors">
+      9579744727
+    </a>
+    <a href="tel:9881956427" className="hover:text-white transition-colors">
+      9881956427
+    </a>
+  </div>
+</div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-primary shrink-0" />
                 <a
